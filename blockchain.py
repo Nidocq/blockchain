@@ -2,6 +2,9 @@ import json
 from time import time
 import hashlib
 import json
+from uuid import uuid4
+
+from flask import Flask
 
 class Blockchain(object):
     def __init__(self):
@@ -67,3 +70,36 @@ blockchain = Blockchain()
 #blockchain.new_trans("phillip", "manas", 1000)
 #print(hashlib.sha256("10035293".encode()).hexdigest())
 #print(blockchain.proof_of_work(100))
+
+# Instantiate our Node
+app = Flask(__name__)
+
+# Generate a globally unique address for this node
+node_identifier = str(uuid4()).replace('-', '')
+
+# Instantiate the Blockchain
+blockchain = Blockchain()
+
+
+@app.route('/mine', methods=['GET'])
+def mine():
+        return "Mining of a new block started"
+
+@app.route('/transactions/new', methods=['POST'])
+def new_transactions():
+    return "Creating of a new transaction"
+        
+
+@app.route('/chain', methods=['GET'])
+
+def full_chain():
+        response = {
+            'chain': blockchain.chain,
+            'length': len(blockchain.chain)
+        }
+        return jsonify(response), 200
+
+
+#Kører nuværende på Manas localhost
+if '__name__' == '__main__':
+    app.run(host='127.0.0.1', port=5000)
