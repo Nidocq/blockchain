@@ -6,7 +6,6 @@ from uuid import uuid4
 from textwrap import dedent
 
 from flask import Flask, jsonify, request
-from werkzeug.wrappers import response
 
 class Blockchain(object):
     def __init__(self):
@@ -140,5 +139,5 @@ def full_chain():
 
 
 #Kører nuværende på Manas localhost
-if '__name__' == '__main__':
+if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000)
